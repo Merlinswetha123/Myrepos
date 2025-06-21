@@ -1,0 +1,70 @@
+// Step 1 & 2: Define Document Interface
+public interface Document {
+    void open();
+}
+
+//  Step 3: Create Concrete Document Classes
+public class WordDocument implements Document {
+    public void open() {
+        System.out.println("Opening a Word document.");
+    }
+}
+
+
+public class PdfDocument implements Document {
+    public void open() {
+        System.out.println("Opening a PDF document.");
+    }
+}
+
+public class ExcelDocument implements Document {
+    public void open() {
+        System.out.println("Opening an Excel document.");
+    }
+}
+
+// Step 4: Abstract Factory class
+
+public abstract class DocumentFactory {
+    public abstract Document createDocument();
+}
+
+//Concrete Factories for Each Document Type
+
+public class WordDocumentFactory extends DocumentFactory {
+    public Document createDocument() {
+        return new WordDocument();
+    }
+}
+
+
+public class PdfDocumentFactory extends DocumentFactory {
+    public Document createDocument() {
+        return new PdfDocument();
+    }
+}
+
+
+public class ExcelDocumentFactory extends DocumentFactory {
+    public Document createDocument() {
+        return new ExcelDocument();
+    }
+}
+
+//  Test the Factory Method Pattern
+
+public class Main {
+    public static void main(String[] args) {
+        DocumentFactory wordFactory = new WordDocumentFactory();
+        Document word = wordFactory.createDocument();
+        word.open();
+
+        DocumentFactory pdfFactory = new PdfDocumentFactory();
+        Document pdf = pdfFactory.createDocument();
+        pdf.open();
+
+        DocumentFactory excelFactory = new ExcelDocumentFactory();
+        Document excel = excelFactory.createDocument();
+        excel.open();
+    }
+}
