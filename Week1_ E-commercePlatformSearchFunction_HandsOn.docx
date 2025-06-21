@@ -1,0 +1,101 @@
+public class Product {
+    private String productId;
+    private String productName;
+    private String category;
+
+    public Product(String productId, String productName, String category) {
+        this.productId = productId;
+        this.productName = productName;
+        this.category = category;
+    }
+
+    public String getProductId() {
+        return productId;
+    }
+
+    public String getProductName() {
+        return productName;
+    }
+
+    public String getCategory() {
+        return category;
+    }
+
+    @Override
+    public String toString() {
+        return "Product ID: " + productId + ", Name: " + productName + ", Category: " + category;
+    }
+}
+
+
+
+
+
+// Implementation
+import java.util.Scanner;
+
+public class ProductManager {
+    private static final int MAX_SIZE = 100;
+    private static Product[] products = new Product[MAX_SIZE];
+    private static int count = 0;
+
+    public static void addProduct(Product p) {
+        if (count < MAX_SIZE) {
+            products[count++] = p;
+            System.out.println("Product added successfully.");
+        } else {
+            System.out.println("Array is full.");
+        }
+    }
+
+    public static void searchProduct(String id) {
+        for (int i = 0; i < count; i++) {
+            if (products[i].getProductId().equals(id)) {
+                System.out.println("Found: " + products[i]);
+                return;
+            }
+        }
+        System.out.println("Product not found.");
+    }
+
+    public static void deleteProduct(String id) {
+        for (int i = 0; i < count; i++) {
+            if (products[i].getProductId().equals(id)) {
+                for (int j = i; j < count - 1; j++) {
+                    products[j] = products[j + 1];
+                }
+                products[--count] = null;
+                System.out.println("Product deleted.");
+                return;
+            }
+        }
+        System.out.println("Product not found.");
+    }
+
+    public static void traverseProducts() {
+        System.out.println("All Products:");
+        for (int i = 0; i < count; i++) {
+            System.out.println(products[i]);
+        }
+    }
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        addProduct(new Product("P001", "Phone", "Electronics"));
+        addProduct(new Product("P002", "Shoes", "Fashion"));
+        addProduct(new Product("P003", "Laptop", "Electronics"));
+
+        traverseProducts();
+
+        System.out.print("Enter ID to search: ");
+        String idToSearch = scanner.nextLine();
+        searchProduct(idToSearch);
+
+        System.out.print("Enter ID to delete: ");
+        String idToDelete = scanner.nextLine();
+        deleteProduct(idToDelete);
+
+        traverseProducts();
+    }
+}
